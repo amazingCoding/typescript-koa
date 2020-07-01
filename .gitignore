@@ -1,0 +1,17 @@
+.vscode
+dist
+node_modules
+.DS_Store
+logs/*
+*.log
+/.idea
+.settings/
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+public/upload/*
+!public/upload/.gitkeep
+!logs/.gitkeep

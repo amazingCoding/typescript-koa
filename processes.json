@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "name": "projectName",
+      "script": "./dist/index.js",
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "log_file": "./log/log.log",
+      "error_file": "./log/error.log",
+      "out_file": "./log/out.log"
+    }
+  ]
+}
