@@ -60,9 +60,9 @@ interface RedisCacheMetod {
   del: (key: string) => Promise<void>,
   incr: (key: string) => Promise<string>
 }
+// 自定义的 context
 export interface MyContext extends Koa.ExtendableContext {
   params: any,
-  user: any,
-  render: any,
+  render: (template: string, properties?: { [name: string]: any }) => Promise<string>,
   cache: RedisCacheMetod
 }

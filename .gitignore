@@ -15,3 +15,5 @@ logs/*
 public/upload/*
 !public/upload/.gitkeep
 !logs/.gitkeep
+apiDoc/*
+!apiDoc/.gitkeep

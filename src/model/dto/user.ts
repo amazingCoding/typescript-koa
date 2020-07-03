@@ -1,57 +1,35 @@
-import { IsNotEmpty, Length, MinLength, IsAlphanumeric, IsOptional } from 'class-validator'
-export interface userMsg {
-  id?: number
-  nickname?: string
-  avatar?: string
-  tel?: string
-  boi?: string
-  domin?: string
-  invitation?: number
-  createtime?: Date
-  updatetime?: Date
-  token?: string
+import { IsNotEmpty, Length, IsOptional } from 'class-validator'
+export interface UserMsg {
+  id?: number;
+  nickname: string;
+  avatar: string;
+  createtime?: Date;
+  updatetime?: Date;
+  token?: string;
 }
-export class CheckUserDto {
-  @Length(11, 11)
-  @IsNotEmpty()
-  readonly tel: string
+export interface UserInJwt{
+  id: number;
+  exp:number;
 }
 export class CreateUserDto {
-  @IsNotEmpty() @Length(11, 11)
-  readonly tel: string
-  @IsNotEmpty() @MinLength(6)
+  @IsNotEmpty()
+  readonly nickname: string
+  @IsNotEmpty()
+  @Length(6)
   readonly password: string
-
   @IsOptional()
-  @IsAlphanumeric()
-  readonly domin: string
-  readonly nickname: string
   readonly avatar: string
-  readonly boi: string
-
-  readonly invitation: number
 }
+
 export class UpdateUserDto {
-  @IsNotEmpty() @Length(11, 11)
-  readonly tel: string
-
-  @MinLength(6)
-  readonly password: string
-
-  @IsOptional() @IsAlphanumeric()
-  readonly domin: string
-
-  readonly nickname: string
+  @IsNotEmpty()
+  readonly id: number
   readonly avatar: string
-  readonly boi: string
+  readonly nickname: string
 }
-export class CreateUserByCodeDto {
+export class changePasswordDto {
   @IsNotEmpty()
-  @Length(11, 11)
-  readonly tel: string
-
-  @IsNotEmpty()
-  @Length(6, 6)
-  readonly code: number
-  readonly invitation: number
+  readonly id: number
+  readonly oldPassword: string
+  readonly newPassword: string
 }

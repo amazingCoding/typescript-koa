@@ -17,6 +17,6 @@ export const development: ConfigInterface = {
   redis: {
     host: '127.0.0.1',
     port: 6379,
-    expire: 86400
+    expire: 86400 * 10
   },
 }
