@@ -1,49 +1,34 @@
-import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { CreateArticleDto, UpdateArticleDto, ArticleListDto, ArticleListVo } from "../dto/article";
 import { Tag } from "./Tag";
 import { mysql } from "../../a-lib/SqlHelper";
-import { diffAboutObjects } from "../../helper";
-import { User } from "./User";
+import { diffAboutObjects } from "../../helper"
 const LIST_LIMIT = 20
 @Entity("article", { schema: "blog" })
 export class Article {
   @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
   id: number;
 
-  @Column("varchar", { name: "title", length: 30 })
-  title: string;
+  @Column("varchar", { name: "title", nullable: true, length: 30 })
+  title: string | null;
 
-  @Column("text", { name: "content" })
-  content: string;
+  @Column("text", { name: "content", nullable: true })
+  content: string | null;
 
-  @Column("int", { name: "tagID", unsigned: true })
-  tagId: number;
+  @Column("int", { name: "tagID", nullable: true, unsigned: true })
+  tagId: number | null;
 
-  @Column("int", { name: "userID", unsigned: true })
-  userId: number;
+  @Column("int", { name: "userID", nullable: true, unsigned: true })
+  userId: number | null;
 
-  @Column("int", { name: "is_show", unsigned: true })
-  isShow: number;
+  @Column("int", { name: "is_show", nullable: true, unsigned: true })
+  isShow: number | null;
 
-  @Column("datetime", { name: "createtime" })
-  createtime: Date;
+  @Column("datetime", { name: "createtime", nullable: true })
+  createtime: Date | null;
 
-  @Column("datetime", { name: "updatetime" })
-  updatetime: Date;
-
-  @ManyToOne(() => Tag, (tag) => tag.articles, {
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT",
-  })
-  @JoinColumn([{ name: "tagID", referencedColumnName: "id" }])
-  tag: Tag;
-
-  @ManyToOne(() => User, (user) => user.articles, {
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT",
-  })
-  @JoinColumn([{ name: "userID", referencedColumnName: "id" }])
-  user: User;
+  @Column("datetime", { name: "updatetime", nullable: true })
+  updatetime: Date | null;
 
   async CreateArticle(article: CreateArticleDto, userId: number): Promise<boolean> {
     // 判断 tag 是否存在

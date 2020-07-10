@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from "typeorm"
 import * as argon2 from "argon2"
 import { CreateUserDto, UserMsg, UserInJwt, UpdateUserDto, changePasswordDto } from "../dto/user"
 import { mysql } from "../../a-lib/SqlHelper"
@@ -12,26 +12,20 @@ export class User {
   @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
   id: number;
 
-  @Column("varchar", { name: "nickname", length: 30 })
-  nickname: string;
+  @Column("varchar", { name: "nickname", nullable: true, length: 30 })
+  nickname: string | null;
 
-  @Column("varchar", { name: "avatar", length: 150 })
-  avatar: string;
+  @Column("varchar", { name: "avatar", nullable: true, length: 150 })
+  avatar: string | null;
 
-  @Column("varchar", { name: "password", length: 100 })
-  password: string;
+  @Column("varchar", { name: "password", nullable: true, length: 100 })
+  password: string | null;
 
-  @Column("datetime", { name: "createtime" })
-  createtime: Date;
+  @Column("datetime", { name: "createtime", nullable: true })
+  createtime: Date | null;
 
-  @Column("datetime", { name: "updatetime" })
-  updatetime: Date;
-
-  @OneToMany(() => Article, (article) => article.user)
-  articles: Article[];
-
-  @OneToMany(() => Tag, (tag) => tag.user)
-  tags: Tag[];
+  @Column("datetime", { name: "updatetime", nullable: true })
+  updatetime: Date | null;
 
   @BeforeInsert()
   async hashPassword() {
@@ -71,12 +65,11 @@ export class User {
   }
   async update(user: UpdateUserDto): Promise<UserMsg | null> {
     // 如果存在修改 nickname 的，则需要判断是否有同名的
-    if (user.nickname) {
+    if (user.nickname && user.nickname != this.nickname) {
       const userInDB: User = await User.findUserBy('nickname', user.nickname)
       if (userInDB) return null
-      // 没用同名的
-      this.nickname = user.nickname
     }
+    this.nickname = user.nickname
     this.updatetime = new Date()
     if (user.avatar) this.avatar = user.avatar
     await mysql.connection.getRepository(User).save(this)
@@ -85,7 +78,7 @@ export class User {
   async changePassword(user: changePasswordDto): Promise<boolean> {
     const flag = await argon2.verify(this.password, user.oldPassword)
     if (!flag) return false
-    this.password = user.newPassword
+    this.password = await argon2.hash(user.newPassword)
     this.updatetime = new Date()
     await mysql.connection.getRepository(User).save(this)
     return true

@@ -47,7 +47,7 @@ export class ArticleController {
   }
 
   @Get('articleList')
-  async articleList(@Query({ type: ArticleListDto }) article: ArticleListDto, ctx: Context): Promise<Response> {
+  async articleList(@Query({ type: ArticleListDto }) article: ArticleListDto): Promise<Response> {
     const listVo = await Article.getList(article)
     const res: SucessResponse = { data: listVo, status: 0 }
     return res

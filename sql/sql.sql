@@ -4,31 +4,28 @@ use blog;
 
 CREATE TABLE user(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nickname VARCHAR(30) NOT NULL DEFAULT '',
-    avatar VARCHAR(150) NOT NULL DEFAULT '',
-    password VARCHAR(100) NOT NULL DEFAULT '',
-    createtime DATETIME NOT NULL,
-    updatetime DATETIME NOT NULL
+    nickname VARCHAR(30),
+    avatar VARCHAR(150),
+    password VARCHAR(100),
+    createtime DATETIME,
+    updatetime DATETIME
 ) DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE tag(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL DEFAULT '',
-    userID INT UNSIGNED NOT NULL,
-    createtime DATETIME NOT NULL,
-    updatetime DATETIME NOT NULL,
-    FOREIGN KEY (userID) REFERENCES user (id)
+    userID INT UNSIGNED,
+    createtime DATETIME,
+    updatetime DATETIME
 ) DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE article(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(30) NOT NULL DEFAULT '',
-    content TEXT NOT NULL DEFAULT '',
-    tagID INT UNSIGNED NOT NULL,
-    userID INT UNSIGNED NOT NULL,
-    is_show INT UNSIGNED NOT NULL,
-    createtime DATETIME NOT NULL,
-    updatetime DATETIME NOT NULL,
-    FOREIGN KEY(tagID) REFERENCES tag(id),
-    FOREIGN KEY(userID) REFERENCES user(id)
+    title VARCHAR(30),
+    content TEXT,
+    tagID INT UNSIGNED,
+    userID INT UNSIGNED,
+    is_show INT UNSIGNED,
+    createtime DATETIME,
+    updatetime DATETIME
 ) DEFAULT CHARSET=utf8mb4;

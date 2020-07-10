@@ -13,17 +13,19 @@ export const auth = async (ctx: Context): Promise<ErrorResponse | null> => {
   if (header.authorization) {
     try {
       const decoded: any = jwt.verify(header.authorization, SECRET)
-      let flag = false
       const userInJwt = decoded as UserInJwt
+      let resInDB: User = null
       // 查找 redis 中是否存在
-      const resInRedis = await ctx.cache.get(userInJwt.id.toString())
-      if (resInRedis) flag = true
-      // 查找数据库中是否存在
-      const user = new User()
-      const resInDB = await user.findUserBy(`id`, userInJwt.id)
-      if (resInDB) flag = true
+      const resInRedis = await ctx.cache.get('userID_' + userInJwt.id.toString())
+      if (resInRedis) {
+        if (resInRedis != header.authorization) {
+          const res: ErrorResponse = { message: '登录失效', status: -2 }
+          return res
+        }
+        resInDB = await User.findUserBy(`id`, userInJwt.id)
+      }
       // 存在就挂载到 ctx 的 user 上
-      if (flag) {
+      if (resInDB) {
         ctx.user = resInDB
         return null
       }

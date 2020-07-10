@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsc && node ./dist/index.js",
     "build": "rm -rf dist/* && tsc",
-    "database": "rm -rf ./src/model/temp/entities & typeorm-model-generator -u root -e mysql -o ./src/model/temp/ -d blog --noConfig true --ce pascal --cp camel",
+    "database": "rm -rf ./src/model/temp/entities & typeorm-model-generator -h localhost -u root -x test123456 -e mysql -d blog -o ./src/model/temp/ --noConfig true --ce pascal --cp camel",
     "api": "rm -rf apiDoc/* && typedoc --out ./apiDoc --exclude src/controller/* --ignoreCompilerErrors"
   },
   "eslintConfig": {

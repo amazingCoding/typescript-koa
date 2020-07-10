@@ -4,7 +4,7 @@ import { CreateOrUpdateTagDto, DelTagDto, TagListDto, TagListVo } from "../model
 import { auth } from "../helper/auth";
 import { Context } from "../interface";
 import { Tag } from "../model/entities/Tag";
-@Controller('/')
+@Controller('/tag/')
 export class TagController {
   @Post('addTag')
   @Auth(auth)

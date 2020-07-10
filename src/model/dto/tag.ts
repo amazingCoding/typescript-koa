@@ -1,4 +1,4 @@
-import { IsNotEmpty, Length, IsOptional } from 'class-validator'
+import { IsNotEmpty } from 'class-validator'
 import { Tag } from '../entities/Tag'
 export class CreateOrUpdateTagDto {
   @IsNotEmpty()

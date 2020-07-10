@@ -34,7 +34,7 @@ export class UserController {
     }
     // 存带 redis 去
     const loginMsg = userMsg as UserMsg
-    await ctx.cache.set(loginMsg.id.toString(), loginMsg.token)
+    await ctx.cache.set('userID_' + loginMsg.id.toString(), loginMsg.token)
 
     const res: SucessResponse = { data: userMsg, status: 0 }
     return res
@@ -51,7 +51,6 @@ export class UserController {
       const res: ErrorResponse = { message: `无权限修改`, status: -1 }
       return res
     }
-    // 更新
     const userMsg: UserMsg = await currentUser.update(user)
     if (!userMsg) {
       const res: ErrorResponse = { message: `该用户名已存在`, status: -1 }
@@ -59,7 +58,6 @@ export class UserController {
     }
     const res: SucessResponse = { data: userMsg, status: 0 }
     return res
-
   }
   // 修改密码
   @Post('changePassword')
@@ -76,7 +74,7 @@ export class UserController {
       const res: ErrorResponse = { message: `旧密码错误`, status: -1 }
       return res
     }
-    await ctx.cache.del(currentUser.id.toString())
+    await ctx.cache.del('userID_' + currentUser.id.toString())
 
     // 前端需要退出登录态，如果不希望前端退出登录态，则需要在此之前走一遍登录流程：
     // 生成 token & 存在 redis

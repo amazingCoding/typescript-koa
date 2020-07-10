@@ -43,3 +43,20 @@ npm i --save redis co-redis
 * 启动 mysql & redis
 * 执行 sql/sql.sql
 * 执行 `npm run dev`
+
+```
+curl -d "nickname=use1&password=test12345" http://localhost:3000/api/sgin
+curl -d "nickname=use1&password=123456" http://localhost:3000/api/login
+
+
+curl -H "authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNTk0Mjg4MDM5LjY0OCwiaWF0IjoxNTk0MDI4ODM5fQ.uZuXjrxUMGIeYyZifrFf_pnREBpwGLmK41tDRXvrhn8" -d "nickname=use1&id=4" http://localhost:3000/api/updateMsg
+
+curl  -H "authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNTk0Mjg4MDM5LjY0OCwiaWF0IjoxNTk0MDI4ODM5fQ.uZuXjrxUMGIeYyZifrFf_pnREBpwGLmK41tDRXvrhn8" -d "oldPassword=test12345&id=4&newPassword=123456" http://localhost:3000/api/changePassword
+
+
+curl -H "authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNTk0Mjg4MDM5LjY0OCwiaWF0IjoxNTk0MDI4ODM5fQ.uZuXjrxUMGIeYyZifrFf_pnREBpwGLmK41tDRXvrhn8" -d "name=test" http://localhost:3000/api/tag/addTag
+
+curl -H "authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNTk0Mjg4MDM5LjY0OCwiaWF0IjoxNTk0MDI4ODM5fQ.uZuXjrxUMGIeYyZifrFf_pnREBpwGLmK41tDRXvrhn8" -d "id=2" http://localhost:3000/api/tag/delTag
+
+curl -H "authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZXhwIjoxNTk0Mjg4MDM5LjY0OCwiaWF0IjoxNTk0MDI4ODM5fQ.uZuXjrxUMGIeYyZifrFf_pnREBpwGLmK41tDRXvrhn8" -d "name=hello&id=1" http://localhost:3000/api/tag/updateTag
+```
