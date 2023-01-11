@@ -34,7 +34,7 @@
   "dependencies": {
     "argon2": "^0.26.2",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.14.0",
     "co-redis": "^2.1.1",
     "formidable": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
